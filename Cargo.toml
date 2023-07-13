@@ -15,7 +15,7 @@ categories = ["text-processing"]
 autotests = false
 exclude = ["/scripts/*", "/.github/*"]
 edition = "2021"
-rust-version = "1.60.0"
+#rust-version = "1.60.0"
 
 [workspace]
 members = [
@@ -33,7 +33,7 @@ doctest = false
 # Features are documented in the "Crate features" section of the crate docs:
 # https://docs.rs/regex/*/#crate-features
 [features]
-default = ["std", "perf", "unicode", "regex-syntax/default"]
+default = ["std", "perf", "unicode", "regex_syntax/default"]
 
 # ECOSYSTEM FEATURES
 
@@ -62,7 +62,7 @@ perf-dfa = []
 # Enables aggressive use of inlining.
 perf-inline = []
 # Enables literal optimizations.
-perf-literal = ["aho-corasick", "memchr"]
+perf-literal = ["aho_corasick", "memchr"]
 
 
 # UNICODE DATA FEATURES
@@ -76,22 +76,22 @@ unicode = [
   "unicode-perl",
   "unicode-script",
   "unicode-segment",
-  "regex-syntax/unicode",
+  "regex_syntax/unicode",
 ]
 # Enables use of the `Age` property, e.g., `\p{Age:3.0}`.
-unicode-age = ["regex-syntax/unicode-age"]
+unicode-age = ["regex_syntax/unicode-age"]
 # Enables use of a smattering of boolean properties, e.g., `\p{Emoji}`.
-unicode-bool = ["regex-syntax/unicode-bool"]
+unicode-bool = ["regex_syntax/unicode-bool"]
 # Enables Unicode-aware case insensitive matching, e.g., `(?i)β`.
-unicode-case = ["regex-syntax/unicode-case"]
+unicode-case = ["regex_syntax/unicode-case"]
 # Enables Unicode general categories, e.g., `\p{Letter}` or `\pL`.
-unicode-gencat = ["regex-syntax/unicode-gencat"]
+unicode-gencat = ["regex_syntax/unicode-gencat"]
 # Enables Unicode-aware Perl classes corresponding to `\w`, `\s` and `\d`.
-unicode-perl = ["regex-syntax/unicode-perl"]
+unicode-perl = ["regex_syntax/unicode-perl"]
 # Enables Unicode scripts and script extensions, e.g., `\p{Greek}`.
-unicode-script = ["regex-syntax/unicode-script"]
+unicode-script = ["regex_syntax/unicode-script"]
 # Enables Unicode segmentation properties, e.g., `\p{gcb=Extend}`.
-unicode-segment = ["regex-syntax/unicode-segment"]
+unicode-segment = ["regex_syntax/unicode-segment"]
 
 
 # UNSTABLE FEATURES (requires Rust nightly)
@@ -106,19 +106,21 @@ unstable = ["pattern"]
 pattern = []
 
 # For very fast prefix literal matching.
-[dependencies.aho-corasick]
-version = "1.0.0"
+[dependencies.aho_corasick]
+#version = "1.0.0"
+path = "../aho_corasick"
 optional = true
 
 # For skipping along search text quickly when a leading byte is known.
 [dependencies.memchr]
-version = "2.5.0"
+#version = "2.5.0"
+path = "../memchr"
 optional = true
 
 # For parsing regular expressions.
-[dependencies.regex-syntax]
+[dependencies.regex_syntax]
 path = "regex-syntax"
-version = "0.7.2"
+#version = "0.7.2"
 default-features = false
 
 [dev-dependencies]

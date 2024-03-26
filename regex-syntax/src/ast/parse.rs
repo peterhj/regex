@@ -341,7 +341,7 @@ impl Parser {
     }
 
     /// Parse the regular expression into an abstract syntax tree.
-    pub fn parse(&mut self, pattern: &str) -> Result<Ast> {
+    pub fn parse(&self, pattern: &str) -> Result<Ast> {
         ParserI::new(self, pattern).parse()
     }
 

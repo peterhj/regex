@@ -359,14 +359,17 @@ impl Parser {
     /// This is called at the beginning of every parse. This prevents the
     /// parser from running with inconsistent state (say, if a previous
     /// invocation returned an error and the parser is reused).
-    fn reset(&self) {
+    pub fn reset(&self) {
         // These settings should be in line with the construction
         // in `ParserBuilder::build`.
         self.pos.set(Position { offset: 0, line: 1, column: 1 });
+        self.capture_index.set(0);
         self.ignore_whitespace.set(self.initial_ignore_whitespace);
         self.comments.borrow_mut().clear();
         self.stack_group.borrow_mut().clear();
         self.stack_class.borrow_mut().clear();
+        self.capture_names.borrow_mut().clear();
+        self.scratch.borrow_mut().clear();
     }
 }
 
@@ -963,7 +966,6 @@ impl<'s, P: Borrow<Parser>> ParserI<'s, P> {
     /// all of the comments found in the pattern.
     fn parse_with_comments(&self) -> Result<ast::WithComments> {
         assert_eq!(self.offset(), 0, "parser can only be used once");
-        self.parser().reset();
         let mut concat = ast::Concat { span: self.span(), asts: vec![] };
         loop {
             self.bump_space();

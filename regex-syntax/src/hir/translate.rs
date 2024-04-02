@@ -38,6 +38,7 @@ impl TranslatorBuilder {
     pub fn build(&self) -> Translator {
         Translator {
             stack: RefCell::new(vec![]),
+            initial_flags: self.flags,
             flags: Cell::new(self.flags),
             utf8: self.utf8,
         }
@@ -116,6 +117,7 @@ impl TranslatorBuilder {
 pub struct Translator {
     /// Our call stack, but on the heap.
     stack: RefCell<Vec<HirFrame>>,
+    initial_flags: Flags,
     /// The current flag settings.
     flags: Cell<Flags>,
     /// Whether we're allowed to produce HIR that can match arbitrary bytes.
@@ -126,6 +128,12 @@ impl Translator {
     /// Create a new translator using the default configuration.
     pub fn new() -> Translator {
         TranslatorBuilder::new().build()
+    }
+
+    /// Manually reset the translator internal state.
+    pub fn reset(&self) {
+        self.stack.borrow_mut().clear();
+        self.flags.set(self.initial_flags);
     }
 
     /// Translate the given abstract syntax tree (AST) into a high level

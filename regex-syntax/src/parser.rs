@@ -219,9 +219,16 @@ impl Parser {
         ParserBuilder::new().build()
     }
 
+    /// Manually reset the parser internal state.
+    pub fn reset(&self) {
+        self.ast.reset();
+        self.hir.reset();
+    }
+
     /// Parse the regular expression into a high level intermediate
     /// representation.
     pub fn parse(&self, pattern: &str) -> Result<hir::Hir, Error> {
+        self.reset();
         let ast = self.ast.parse(pattern)?;
         let hir = self.hir.translate(pattern, &ast)?;
         Ok(hir)
